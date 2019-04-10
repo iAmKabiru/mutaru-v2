@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="col-sm-12 col-md-12">
+
+    <div class="panel panel-default">
+    <div class="panel-heading">
+            <h5><strong>Projects</strong></h5>
+            </div>
+                    <div class="panel-body">
+<div class="table-responsive">
+                <table class="table table-bordered table-condensed" id="table_id">
+                    <thead>
+                        <tr><th>S/N</th>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Ministry</th>
+                            <th>LGA</th>
+                            <th>Date</th>
+                            <th>progress</th>
+                            <th>status</th>
+                            <th>Submitted By</th>
+                            <th>Phone No.</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for project in object_list %}
+                        <tr>
+                        <td>{{forloop.counter}}</td>
+                            <td><a href="{% url 'project:project_detail' project.id %}">{{project.title}}</a></td>
+                            <td>{{project.description|truncatewords:"8"}}</td>
+                            <td>{{project.ministry}}</td>
+                            <td>{{project.lga}}</td>
+                            <td>{{project.date}}</td>
+                            <td>{{project.progress}}%</td>
+                            <td>{{project.status}}</td>
+                            <td>{{project.submitted_by}}</td>
+                            <td>{{project.phone}}</td>
+                            {% endfor %}
+                        </tr>
+                    </tbody>
+                </table>
+        </div>
+</div>{% endblock %}

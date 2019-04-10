@@ -1,0 +1,132 @@
+{% load staticfiles %}
+<html>
+<head>
+<title>Mu Taru Mu Gyara</title>
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"/>
+<link rel="stylesheet" href="{% static 'css/base.css' %}"/>
+<link rel="stylesheet" href="{% static 'css/w3.css' %}"/>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous"><!--add new user drop down-->
+<style>
+.dropbtn {
+    border: none;
+    cursor: pointer;
+}
+
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    overflow: auto;
+}
+
+.dropdown-content a {
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+
+.show {display:block;}
+</style>
+<!--end-->
+
+</head>
+<body>
+<!--HEADERT-->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+    <span style="font-size:25px;cursor:pointer;margin-left:10px;" onclick="openNav()"id="header-link"> ☰</span>
+    <span class="brand" id="header-link"><strong><a class="head-link" href="/">Mu taru mu gyara</a><strong></span>
+    
+<!--dropdown-->
+<!--dropdown ends-->
+  
+  </div>
+</nav>
+<!--HEADER ENDS-->
+
+<!--SIDEBAR-->
+<aside id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">x</a>
+  <hr>
+    <a href="{% url 'project:dashboard' %}">Dashboard</a>	
+  <hr>
+  <a href="{% url 'project:project_create' %}"><i class="fas fa-edit"></i> Need</a>	
+  <hr>	
+  <a href="{% url 'project:create_report' %}"><i class="fas fa-comment"></i> Comment</a>		
+  <hr>
+    <a href="{% url 'project:year_list' %}">Year</a>		
+  <hr>
+  <a href="{% url 'project:pmp_projects' %}"><i class="fas fa-building"></i> pmp Projects</a>	
+  <a href="{% url 'project:ministry_projects' %}"><i class="fas fa-building"></i> min Projects</a>
+  <a href="{% url 'project:governor_projects' %}"><i class="fas fa-building"></i> Gov Projects</a>	
+  <hr>	
+  <a href="{% url 'project:pmp_reports' %}"><i class="fas fa-comment-alt"></i> pmp report</a>	
+  <a href="{% url 'project:ministry_reports' %}"><i class="fas fa-comment-alt"></i> min report</a>
+  <a href="{% url 'project:governor_reports' %}"><i class="fas fa-comment-alt"></i> Gov report</a>
+  <hr>
+<a href="#categorySubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-landmark"></i> MDA's</a>
+  <ul class="collapse list-unstyled" id="categorySubmenu">
+  <hr>
+   <li>
+  <a href="{% url 'mda:ministry_list' %}"><i class="fas fa-landmark"></i> Ministries</a>
+  </li>
+  <hr>
+  <li>
+<a href="#"><i class="fas fa-landmark"></i> Assembly</a>
+  </li>
+  </ul>
+    <hr>
+  <a href="{% url 'lga:lga_list' %}">LGA</a>
+  <hr>
+  <a href="{% url 'users:user_list' %}"><i class="fas fa-users"></i> Users</a>
+  <hr>
+  <a href="{% url 'users:profile' %}"><i class="fas fa-user"></i> Profile</a>
+  <hr>
+  {% if user.is_authenticated %}
+  <a href="{% url 'logout'%}">Logout</a>
+  {% else %}
+  <a href="{% url 'login'%}">Login</a>
+  {% endif %}
+  <hr>
+</aside>
+<!--SIDEBAR ENDS-->
+  <div class="container">
+  {% block content %}
+  {% endblock %}
+</div>
+
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+<script>
+function myFunction() {
+    document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+</script>
+
+
+</body>
+</html>
