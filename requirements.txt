@@ -8,7 +8,7 @@ gunicorn==19.3.0
 psycopg2==2.7.1
 dj-database-url==0.5.0
 static==1.1.1
-pystach==0.5.4
+pystach
 whitenoise
 python-decouple
 Pillow
