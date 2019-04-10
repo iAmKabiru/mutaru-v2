@@ -143,7 +143,7 @@ class GovernorList(LoginRequiredMixin, ListView):
     
     
 
-@login_required
+
 def add_comment(request, pk):
     project = get_object_or_404(Project, pk=pk)
     if request.method == "POST":
@@ -204,7 +204,7 @@ class GovernorReports(LoginRequiredMixin, ListView):
 
 
 
-class ReportCreate(LoginRequiredMixin, CreateView):
+class ReportCreate(CreateView):
     model = Report
     form_class = ReportForm
     template_name = 'report/report_form.html'
@@ -217,7 +217,7 @@ class ReportCreate(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class ReportDetail(LoginRequiredMixin, DetailView):
+class ReportDetail(DetailView):
     model = Report
     template_name = 'report/report_detail.html'
 
