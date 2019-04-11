@@ -154,10 +154,11 @@ PWA_APP_NAME = 'Mu Taru'
 PWA_APP_DESCRIPTION = "Mu Taru Mu Gyara"
 PWA_APP_THEME_COLOR = '#4285F4'
 PWA_APP_BACKGROUND_COLOR = '#ffffff'
-PWA_APP_DISPLAY = 'standalone'
-PWA_APP_SCOPE = '/',
-PWA_APP_ORIENTATION = 'any'
-PWA_APP_START_URL = '/'
+
+#PWA_APP_DISPLAY = 'standalone'
+#PWA_APP_SCOPE = '/',
+#PWA_APP_ORIENTATION = 'any'
+#PWA_APP_START_URL = '/'
 PWA_APP_ICONS = [
     {
         'src': 'users/static/img/logo.png',
@@ -170,5 +171,5 @@ PWA_APP_SPLASH_SCREEN = [
         'media': '(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)'
     }
 ]
-PWA_APP_DIR = 'ltr'
-PWA_APP_LANG = 'en-US'
+#PWA_APP_DIR = 'ltr'
+#PWA_APP_LANG = 'en-US'
