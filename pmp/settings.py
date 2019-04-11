@@ -149,6 +149,7 @@ LOGIN_REDIRECT_URL = 'project:dashboard'
 
 
 # pwa config
+PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, 'pwa', 'serviceworker.js')
 
 PWA_APP_NAME = 'Mu Taru'
 PWA_APP_DESCRIPTION = "Mu Taru Mu Gyara"
@@ -156,7 +157,7 @@ PWA_APP_THEME_COLOR = '#4285F4'
 PWA_APP_BACKGROUND_COLOR = '#ffffff'
 
 PWA_APP_DISPLAY = 'standalone'
-PWA_APP_SCOPE = '/',
+#PWA_APP_SCOPE = '/',
 #PWA_APP_ORIENTATION = 'any'
 #PWA_APP_START_URL = '/'
 PWA_APP_ICONS = [
