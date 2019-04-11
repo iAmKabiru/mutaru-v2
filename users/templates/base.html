@@ -1,7 +1,10 @@
 {% load staticfiles %}
+{% load pwa %}
+
 <html>
 <head>
 <title>Mu Taru Mu Gyara</title>
+{% progressive_web_app_meta %}
 <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"/>
 <link rel="stylesheet" href="{% static 'css/base.css' %}"/>
 <link rel="stylesheet" href="{% static 'css/w3.css' %}"/>
