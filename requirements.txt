@@ -13,4 +13,4 @@ whitenoise==3.2
 python-decouple
 Pillow
 Markdown
-django-pwa
+
