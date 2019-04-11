@@ -161,13 +161,13 @@ PWA_APP_BACKGROUND_COLOR = '#ffffff'
 #PWA_APP_START_URL = '/'
 PWA_APP_ICONS = [
     {
-        'src': 'users/static/img/logo.png',
+        'src': '/static/img/logo.png',
         'sizes': '160x160'
     }
 ]
 PWA_APP_SPLASH_SCREEN = [
     {
-        'src': 'users/static/img/icons/splash.png',
+        'src': '/static/img/icons/splash.png',
         'media': '(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)'
     }
 ]
