@@ -149,7 +149,7 @@ LOGIN_REDIRECT_URL = 'project:dashboard'
 
 
 # pwa config
-PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, 'pwa', 'templates/serviceworker.js')
+PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, 'pwa', 'pwa/templates/serviceworker.js')
 
 PWA_APP_NAME = 'Mu Taru'
 PWA_APP_DESCRIPTION = "Mu Taru Mu Gyara"
