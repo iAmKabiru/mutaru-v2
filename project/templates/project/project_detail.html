@@ -12,9 +12,19 @@
             <p>Status: {{project.status}}</p>
             <p>Progress: {{project.progress}}%</p>
             <p>Budget Year: {{project.budget_year}}</p>
+
+            {% if user.is_authenticated %}
+            {% if user.is_pmp or user.is_superuser %}
             <a class="btn btn-danger" href="{% url 'project:project_delete' project.id %}">Delete</a>
-            <a class="btn btn-info" href="{% url 'project:pmp_project_update' project.id %}">pmp Edit</a>
-            <a class="btn btn-info" href="{% url 'project:ministry_project_update' project.id %}">mininstry Edit</a>
+            <a class="btn btn-info" href="{% url 'project:pmp_project_update' project.id %}">Update</a>
+            {% endif %}
+
+
+            {% if user.is_ministryuser or user.is_superuser %}
+            <a class="btn btn-info" href="{% url 'project:ministry_project_update' project.id %}">Update</a>
+            {% endif %}
+            {% endif %}
+
         </div>
     </div>
 </div>

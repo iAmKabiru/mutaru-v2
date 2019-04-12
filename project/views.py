@@ -90,7 +90,7 @@ def project_create(request):
 
 
  
-class ProjectDetail(LoginRequiredMixin, DetailView):
+class ProjectDetail(DetailView):
     model = Project
 
 def project_list(request):
@@ -129,7 +129,7 @@ class MinistryProjects(LoginRequiredMixin, ListView):
    
     def get_queryset(self):
         q1 = Project.objects.filter(ministry=self.request.user.ministry).filter(status='approved')
-        q2 = Project.objects.filter(status='unreviewed').filter(date__day__gte = datetime.date.today().day - 7)
+        q2 = Project.objects.filter(status='unreviewed').filter(ministry=self.request.user.ministry).filter(date__day__gte = datetime.date.today().day - 7)
         return q1.union(q2)
 
 class GovernorList(LoginRequiredMixin, ListView):
@@ -164,7 +164,7 @@ def add_comment(request, pk):
 
 
 
-class CommentDetail(LoginRequiredMixin, DetailView):
+class CommentDetail(DetailView):
     model = Comment
     template_name = 'comment/comment_detail.html'
 

@@ -24,6 +24,12 @@
                     <td><strong>User Type</strong></td>
                     <td><strong>{{user.user_type}}</strong></td>
                 </tr>
+                {% if user.is_ministryuser %}
+                <tr>
+                 <td><strong>Ministry</strong></td>
+                 <td><strong>{{user.ministry}}</strong></td>
+                </tr>
+                {% endif %}
             </table>
             <a href="{% url 'users:edit_profile'%}" class="btn btn-primary btn-lg" role="button">Edit Profile</a>
             <a href="{% url 'users:change_password'%}" class="btn btn-info btn-lg" role="button">Change Password</a>

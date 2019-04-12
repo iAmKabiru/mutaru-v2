@@ -22,15 +22,17 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+
 #SECRET_KEY = '97=ti2+&!62ss9(*zr%5#h+0a7)@vmueug@zcs!2kp^o2+@6p#'
 SECRET_KEY = config('SECRET_KEY') 
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 #DEBUG = True
 DEBUG = config('DEBUG', default=False, cast=bool) 
 
 
-ALLOWED_HOSTS = ['mutaru.herokuapp.com']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -43,7 +45,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'pwa',
     'mda',
     'lga',
     'project',
@@ -146,31 +147,3 @@ AUTH_USER_MODEL = 'users.User'
 MEDIA_URL = '/media/'
 LOGOUT_REDIRECT_URL = 'project:project_list'
 LOGIN_REDIRECT_URL = 'project:dashboard'
-
-
-# pwa config
-PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, 'pwa', 'pwa/templates/serviceworker.js')
-
-PWA_APP_NAME = 'Mu Taru'
-PWA_APP_DESCRIPTION = "Mu Taru Mu Gyara"
-PWA_APP_THEME_COLOR = '#4285F4'
-PWA_APP_BACKGROUND_COLOR = '#ffffff'
-
-PWA_APP_DISPLAY = 'standalone'
-#PWA_APP_SCOPE = '/',
-#PWA_APP_ORIENTATION = 'any'
-#PWA_APP_START_URL = '/'
-PWA_APP_ICONS = [
-    {
-        'src': '/static/img/logo.png',
-        'sizes': '160x160'
-    }
-]
-PWA_APP_SPLASH_SCREEN = [
-    {
-        'src': '/static/img/splash.png',
-        'media': '(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)'
-    }
-]
-#PWA_APP_DIR = 'ltr'
-#PWA_APP_LANG = 'en-US'
