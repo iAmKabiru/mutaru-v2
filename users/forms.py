@@ -4,6 +4,7 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 from django import forms
 from users.models import Profile
+from mda.models import Ministry
 from django.contrib.auth.forms import UserCreationForm
 from django.db import transaction
 
@@ -29,6 +30,12 @@ class MinistryUserForm(forms.ModelForm):
         attrs = {
             'class':'form-control',
             'placeholder':'Username'
+        }
+    ))
+    
+    ministry = forms.ModelChoiceField(queryset=Ministry.objects.all(), required=True, widget=forms.Select(
+        attrs={
+            'class': 'form-control',
         }
     ))
 
