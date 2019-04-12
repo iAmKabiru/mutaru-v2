@@ -5,7 +5,7 @@ this.addEventListener('install',(event)=>{
         .then((cache)=>{
             cache.addAll([
                 '/',
-                //'/index.html',
+                 '../../project/templates/project/project_list.html',
                 '/main.js',
                 '/bootstrap.min.js',
                 '/jquery.min.js',
@@ -13,7 +13,7 @@ this.addEventListener('install',(event)=>{
                 '/bootstrap.min.css',
                 '/fontawesome.css',
                 '/img/splash.png',
-                '/img/logo.png'
+                '/img/logo.png',
             ]);
         })
     );
