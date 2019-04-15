@@ -7,7 +7,7 @@
     "description": "Mu Taru Mu Gyara",
     "icons":[
         {
-            "src": "../img/logo.png",
+            "src": "../img/icon-512x512.png",
             "sizes": "512 x 512",
             "type": "image/png"
         }

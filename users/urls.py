@@ -1,4 +1,3 @@
-from django.views.generic import TemplateView
 from django.urls import path
 from . import views 
 
@@ -22,7 +21,6 @@ urlpatterns = [
     path('users/<int:id>/delete/', views.user_delete, name='user_delete'),
 
     #service worker
-    path('sw.js', (TemplateView.as_view(template_name="sw.js", content_type='application/javascript', )), name='sw.js'),
 
 
 ]
