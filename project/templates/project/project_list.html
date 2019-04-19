@@ -14,7 +14,7 @@
                 Date:<input class="form-control" placeholder="yyyy-mm-dd" type="text" name="date"
                     id="id_date">
                     </div>
-                <button class="btn btn-success" type="submit">Filter</button>
+                <button class="btn btn-success" type="submit"><i class="fas fa-search"></i> search</button>
             </>
         </div>
     </div>
@@ -25,15 +25,14 @@
     {% for project in filter.qs %}
     <div class="panel panel-default project-panel">
     <div class="panel-heading">
-            <h5><strong>{{project.title}}</strong></h5>
+            <h4><strong>{{project.title}}</strong><span style="font-size:15px;"> - {{project.date}}</span></h4>
             </div>
                     <div class="panel-body">
 
-            <h5>{{project.description}}</h5>
-            <h5> {{project.ministry}}</h5>
-            <h5> {{project.lga}}</h5>
-            <h5> {{project.date}}</h5>
-            <a href="{% url 'project:comment_create' project.id %}" class="btn btn-primary">Comment</a>
+            <h3>{{project.description}}</h3>
+            <h5><i class="fas fa-landmark"></i> {{project.ministry}}</h5>
+            <h5><i class="fas fa-map-marked-alt"></i> {{project.lga}}</h5>
+            <a href="{% url 'project:comment_create' project.id %}" class="btn btn-primary"><i class="fas fa-comment"></i> Comment</a>
         </div>
     </div>
     {% endfor %}
