@@ -16,8 +16,12 @@
         <div class="panel-body">
 <form class="form-horizontal login-form" role="form" method="post">
 {% if form.errors %}
-<p class="login-error">username or password is incorrect</p>
+<div class="alert alert-danger fade in">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>username or password is incorrect</strong>
+  </div>
 {% endif %}
+
 {% csrf_token %}
   <div class="form-group">
       <input type="text" name="username" id="id_username" class="form-control" placeholder="username" autofocus="true">

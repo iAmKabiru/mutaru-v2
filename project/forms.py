@@ -286,7 +286,7 @@ class ReportForm(forms.ModelForm):
     class Meta:
         model = Report
         fields = ['project', 'text', 'lga', 'ministry',
-                  'picture', 'submitted_by', 'phone', 'status']
+                  'picture', 'submitted_by', 'phone']
 
 
 class ReportEditForm(forms.ModelForm):
