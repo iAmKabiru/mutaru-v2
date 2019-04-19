@@ -94,7 +94,7 @@ class ProjectDetail(DetailView):
     model = Project
 
 def project_list(request):
-    project_list = Project.objects.all()
+    project_list = Project.objects.filter(status='approved')
     form = FilterForm()
     project_filter = ProjectFilter(request.GET, queryset=project_list)
     return render(request, 'project/project_list.html', {'filter': project_filter, 'form':form})
