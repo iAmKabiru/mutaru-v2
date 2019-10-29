@@ -8,7 +8,7 @@
             <p>Description: {{project.description}}</p>
             <p>Ministry: {{project.ministry}}</p>
             <p>LGA: {{project.lga}}</p>
-            <p>Date Submitted: {{project.created_date}}</p>
+            <p>Date Submitted: {{project.date}}</p>
             <p>Status: {{project.status}}</p>
             <p>Progress: {{project.progress}}%</p>
             <p>Budget Year: {{project.budget_year}}</p>
@@ -30,7 +30,7 @@
 </div>
 </div>
 
-
+{% if  user.is_authenticated %}
 <div class="col-sm-12 col-md-12">
 <div class="panel panel-default">
 <div class="panel-heading">
@@ -68,4 +68,5 @@
 </div>
 </div>
 </div>
+{% endif %}
 {% endblock %}

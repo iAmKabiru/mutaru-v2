@@ -5,7 +5,8 @@ from django.conf.urls import url
 app_name = 'project'
 
 urlpatterns = [
-    path('', views.project_list, name='project_list'),
+    path('', views.landpage, name='landpage'),
+    path('projectlist/', views.project_list, name='project_list'),
     path('years', views.YearList.as_view(), name='year_list'),
     path('year-detail/<int:pk>', views.YearDetail.as_view(), name='year_detail'),
     path('add-year', views.YearCreate.as_view(), name='year_create'),

@@ -24,6 +24,9 @@ from django.http import HttpResponseRedirect
 import datetime
 
 
+def landpage(request):
+    return render(request, 'landpage.html')
+    
 class YearCreate(LoginRequiredMixin, CreateView):
     model = Year
     form_class = YearForm
@@ -75,6 +78,7 @@ def project_create(request):
         if form.is_valid():
             project = form.save(commit=False)
             project.budget_year = year
+            #project.date = datetime.date.today()
             #form.post_project()
             form.save()
             return redirect('project:project_detail', pk=project.pk)

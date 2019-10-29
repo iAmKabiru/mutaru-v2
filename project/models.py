@@ -40,17 +40,8 @@ class Project(models.Model):
         (disapproved,'disapproved')
     )
 
-    PROGRESS_CHOICES = (
-        ('0', '0%'),
-        ('10', '10%'),
-        ('20', '20%'),
-        ('50', '50%'),
-        ('75', '75%'),
-        ('100', '100%'),
-    )
-
     status = models.CharField(max_length = 15, choices = STATUS_CHOICES, default = unreviewed)
-    progress = models.CharField(max_length = 2, choices= PROGRESS_CHOICES, blank=True, default = 0)
+    progress = models.CharField(max_length = 3, default=0, help_text = "% Progess in percentage")
     
     submitted_by = models.CharField(max_length = 100, verbose_name = 'Full Name', blank=True, null=True)
     phone = models.CharField(max_length = 15, verbose_name = 'Phone Number', blank=True, null=True)
