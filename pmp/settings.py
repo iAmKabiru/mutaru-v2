@@ -166,3 +166,5 @@ PWA_APP_ICONS = [
         'sizes': '512x512'
     }
 ]
+
+# i want to push
