@@ -4,12 +4,7 @@ self.addEventListener('install', function(event) {
   event.waitUntil(
     caches.open(staticCacheName).then(function(cache) {
       return cache.addAll([
-        '/',
-        '/css/base.css',
-        '/css/bootstrap.min.css',
-        '/main.js',
-        '/jquery.min.js',
-        '/bootstrap.min.js',
+        '/'
       ]);
     })
   );
