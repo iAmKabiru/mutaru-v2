@@ -6,11 +6,10 @@ self.addEventListener('install', function(event) {
       return cache.addAll([
         '/',
         'css/base.css',
-        'https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css',
+        'css/bootstrap.min.css',
         'main.js',
-        'https://use.fontawesome.com/releases/v5.8.1/css/all.css',
         'jquery.min.js',
-        'bootstrap.min.js'
+        'bootstrap.min.js',
       ]);
     })
   );
