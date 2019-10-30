@@ -28,8 +28,8 @@ SECRET_KEY = config('SECRET_KEY')
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-#DEBUG = True
-DEBUG = config('DEBUG', default=False, cast=bool) 
+DEBUG = True
+#DEBUG = config('DEBUG', default=False, cast=bool) 
 
 
 ALLOWED_HOSTS = ['*']
@@ -80,7 +80,7 @@ TEMPLATES = [
     },
 ]
 
-#WSGI_APPLICATION = 'pmp.wsgi.application'
+WSGI_APPLICATION = 'pmp.wsgi.application'
 
 
 # Database
@@ -140,7 +140,7 @@ STATICFILES_DIRS = (
      os.path.join(PROJECT_ROOT, 'static'),
  )
 
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+#STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 
 
