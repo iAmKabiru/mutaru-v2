@@ -80,7 +80,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'pmp.wsgi.application'
+#WSGI_APPLICATION = 'pmp.wsgi.application'
 
 
 # Database
