@@ -2,8 +2,13 @@
 <div class="col-sm-12 col-md-8 col-md-offset-2">
     <div class="panel panel-default">
         <div class="panel-body">
-            <form action="" method="get" class="form-inline" role="form">
-                Title:<input type="text" placeholder="project title" name="title" id="id_title" class="form-control">   
+            <form action="" method="get" role="form">
+                <div class="form-group">
+                Tracking code:<input type="text" placeholder="your phone number" name="phone" id="id_title" class="form-control">
+                </div> 
+                <div class="form-group">
+                Title:<input type="text" placeholder="project title" name="title" id="id_title" class="form-control">
+                </div>   
                 <div class="form-group">
                 LGA:<select class="form-control" name="lga" id="id_lga" value={{form.lga}}
                 </div>

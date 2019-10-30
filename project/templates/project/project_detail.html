@@ -12,6 +12,12 @@
             <p>Status: {{project.status}}</p>
             <p>Progress: {{project.progress}}%</p>
             <p>Budget Year: {{project.budget_year}}</p>
+            {% if not user.is_authenticated %}
+            <p>Status: {{project.status}}</p>
+            <div class="alert alert-info" role="alert">
+            use your phone number as your tracking code, to check status of your need
+            </div>
+            {% endif %}
 
             {% if user.is_authenticated %}
             {% if user.is_pmp or user.is_superuser %}

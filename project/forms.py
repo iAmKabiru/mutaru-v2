@@ -117,7 +117,7 @@ class FilterForm(forms.ModelForm):
 
     class Meta:
         model = Project
-        fields = ('title', 'lga', 'ministry', 'date')
+        fields = ('phone', 'title', 'lga', 'ministry', 'date')
 
 
 class PmpProjectEditForm(forms.ModelForm):
@@ -154,6 +154,12 @@ class PmpProjectEditForm(forms.ModelForm):
         }
     ))
 
+    progress_comment = forms.CharField(widget=forms.Textarea(
+        attrs={
+            'class': 'form-control'
+        }
+    ))
+
     phone = forms.CharField(widget=forms.TextInput(
         attrs={
             'class': 'form-control',
@@ -167,9 +173,14 @@ class PmpProjectEditForm(forms.ModelForm):
 
 
 class MinistryProjectEditForm(forms.ModelForm):
+    progress_comment = forms.CharField(widget=forms.Textarea(
+        attrs={
+            'class': 'form-control'
+        }
+    ))
     class Meta:
         model = Project
-        fields = ['progress']
+        fields = ['progress', 'progress_comment']
 
 
 class CommentForm(forms.ModelForm):

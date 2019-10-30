@@ -41,8 +41,8 @@ class Project(models.Model):
     )
 
     status = models.CharField(max_length = 15, choices = STATUS_CHOICES, default = unreviewed)
-    progress = models.CharField(max_length = 3, default=0, help_text = "% Progess in percentage")
-    
+    progress = models.CharField(max_length = 3, default=0, verbose_name="progress(%)")
+    progress_comment = models.TextField(default="none", blank=True)    
     submitted_by = models.CharField(max_length = 100, verbose_name = 'Full Name', blank=True, null=True)
     phone = models.CharField(max_length = 15, verbose_name = 'Phone Number', blank=True, null=True)
     budget_year = models.ForeignKey(Year, on_delete=models.CASCADE, blank=True, null=True, related_name='projects')
