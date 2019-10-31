@@ -20,7 +20,7 @@ class ProjectFilter(django_filters.FilterSet):
         fields = ['phone', 'title', 'lga', 'ministry', 'date']
 
 
-class PmpProjectFilter(django_filters.FilterSet):
+class ProjectFilterSet(django_filters.FilterSet):
     created_min = django_filters.DateFilter(
         field_name='date', lookup_expr='gte')
     created_max = django_filters.DateFilter(

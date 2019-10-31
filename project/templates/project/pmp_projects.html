@@ -1,14 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
 
-
- <form method="get">
-    {{ filter.form.as_p }}
-    <button type="submit">Search</button>
+<form method="get" class="form-inline">
+<label for="id_created_min">From</label> <input type="text" name="created_min" id="id_created_min" placeholder="yyyy-mm-dd" class="form-control">
+<label for="id_created_max">To</label> <input type="text" name="created_max" id="id_created_max" placeholder="yyyy-mm-dd"  class="form-control">
+    <button type="submit" class="btn btn-success">Search</button>&nbsp;<a href="{% url 'project:pmp_projects' %}" class="btn btn-info">Refresh</a>
   </form>
-
-
-
    <div class="panel panel-default">
     <div class="panel-heading">
             <h5><strong>Projects</strong></h5>

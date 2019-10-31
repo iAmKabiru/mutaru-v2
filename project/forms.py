@@ -254,10 +254,10 @@ class CommentEditForm(forms.ModelForm):
 # report form
 
 class ReportForm(forms.ModelForm):
-    project = forms.CharField(widget=forms.TextInput(
+    report_title = forms.CharField(widget=forms.TextInput(
         attrs={
             'class': 'form-control',
-            'placeholder': 'Enter Project Title'
+            'placeholder': 'Title your report'
         }
     ))
 
@@ -299,16 +299,16 @@ class ReportForm(forms.ModelForm):
 
     class Meta:
         model = Report
-        fields = ['project', 'text', 'lga', 'ministry',
+        fields = ['report_title', 'text', 'lga', 'ministry',
                   'picture', 'submitted_by', 'phone']
 
 
 class ReportEditForm(forms.ModelForm):
 
-    project = forms.CharField(widget=forms.TextInput(
+    report_title = forms.CharField(widget=forms.TextInput(
         attrs={
             'class': 'form-control',
-            'placeholder': 'Enter Project Title'
+            'placeholder': 'Enter report Title'
         }
     ))
 
@@ -351,5 +351,5 @@ class ReportEditForm(forms.ModelForm):
 
     class Meta:
         model = Report
-        fields = ['project', 'text', 'lga', 'ministry',
+        fields = ['report_title', 'text', 'lga', 'ministry',
                   'picture', 'submitted_by', 'phone', 'status']

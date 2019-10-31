@@ -15,7 +15,7 @@ from project.forms import (
     ReportEditForm,
     ProjectFilterForm
 )
-from .filters import ProjectFilter, PmpProjectFilter
+from .filters import ProjectFilter, ProjectFilterSet
 from django_filters.views import FilterView
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
@@ -101,14 +101,6 @@ def project_create(request):
 class ProjectDetail(DetailView):
     model = Project
 
-
-def project_list(request):
-    project_list = Project.objects.filter(status='approved')
-    form = FilterForm()
-    project_filter = ProjectFilter(request.GET, queryset=project_list)
-    return render(request, 'project/project_list.html', {'filter': project_filter, 'form': form})
-
-
 class ProjectDelete(LoginRequiredMixin, DeleteView):
     model = Project
     success_url = reverse_lazy('project:pmp_projects')
@@ -133,11 +125,27 @@ class PmpProjectUpdate(LoginRequiredMixin, UpdateView):
 
 
 # project list views
+"""
 class PmpProjects(LoginRequiredMixin, ListView):
     model = Project
     template_name = 'project/pmp_projects.html'
 
+"""
 
+def project_list(request):
+    project_list = Project.objects.filter(status='approved')
+    form = FilterForm()
+    project_filter = ProjectFilter(request.GET, queryset=project_list)
+    return render(request, 'project/project_list.html', {'filter': project_filter, 'form': form})
+
+def pmp_project_list(request):
+    project_list = Project.objects.all()
+    form = ProjectFilterForm()
+    project_filter = ProjectFilterSet(request.GET, queryset=project_list)
+    return render(request, 'project/pmp_projects.html', {'filter': project_filter, 'form': form})
+
+
+"""
 class MinistryProjects(LoginRequiredMixin, ListView):
     model = Project
     template_name = 'project/ministry_projects.html'
@@ -148,8 +156,17 @@ class MinistryProjects(LoginRequiredMixin, ListView):
         q2 = Project.objects.filter(status='unreviewed').filter(
             ministry=self.request.user.ministry).filter(date__day__gte=datetime.date.today().day - 7)
         return q1.union(q2)
+"""
 
+def ministry_project_list(request):
+    q1 = Project.objects.filter(ministry=request.user.ministry).filter(status='approved')
+    q2 = Project.objects.filter(status='unreviewed').filter(ministry=request.user.ministry).filter(date__day__gte=datetime.date.today().day - 7)
+    q3 = q1.union(q2)
+    form = ProjectFilterForm()
+    project_filter = ProjectFilterSet(request.GET, queryset=q3)
+    return render(request, 'project/ministry_projects.html', {'filter': project_filter, 'form': form})
 
+"""
 class GovernorList(LoginRequiredMixin, ListView):
     model = Project
     template_name = 'project/governor_projects.html'
@@ -159,6 +176,15 @@ class GovernorList(LoginRequiredMixin, ListView):
         q2 = Project.objects.filter(status='unreviewed').filter(
             date__day__lte=datetime.date.today().day - 14)
         return q1.union(q2)
+"""
+
+def governor_project_list(request):
+    q1 = Project.objects.filter(status='approved')
+    q2 = Project.objects.filter(status='unreviewed').filter(date__day__gte=datetime.date.today().day - 14)
+    q3 = q1.union(q2)
+    form = ProjectFilterForm()
+    project_filter = ProjectFilterSet(request.GET, queryset=q3)
+    return render(request, 'project/governor_projects.html', {'filter': project_filter, 'form': form})
 
 
 def add_comment(request, pk):
@@ -291,8 +317,4 @@ def dashboard(request):
     return render(request, 'dashboard/dashboard.html', context)
 
 
-def pmp_project_list(request):
-    project_list = Project.objects.all()
-    form = ProjectFilterForm()
-    project_filter = PmpProjectFilter(request.GET, queryset=project_list)
-    return render(request, 'project/pmp_projects.html', {'filter': project_filter, 'form': form})
+

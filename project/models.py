@@ -125,7 +125,7 @@ class DisapprovedComment(Comment):
 
 class Report(models.Model):
      text = models.TextField()
-     project = models.CharField(max_length = 200)
+     report_title = models.CharField(max_length = 200, verbose_name="title", blank=True, null=True)
      picture = models.ImageField(upload_to='media/reports/%y/%m/%d', blank = True, verbose_name='image')
      lga = models.ForeignKey(Lga, on_delete=models.CASCADE, blank=True, null=True)
      ministry = models.ForeignKey(Ministry, on_delete=models.CASCADE, null = True)
