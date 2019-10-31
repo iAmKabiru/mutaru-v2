@@ -1,7 +1,7 @@
 {% load pwa %}
 {% load staticfiles %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" manifest="users/static/manifest/manifest.webmanifest">
   <head>
       {% progressive_web_app_meta %}
     <title>Mu Taru Mu Gyara</title>
@@ -16,9 +16,6 @@
   <meta name="msapplication-TileColor" content="#2F3BA2">
   <!--Meta ends -->
   <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/logo.png' %}"/>
-
-
-
     <!--====== Favicon Icon ======-->
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{% static 'land/css/bootstrap.min.css' %}"/>
