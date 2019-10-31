@@ -1,14 +1,21 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="col-sm-12 col-md-12">
 
-    <div class="panel panel-default">
+
+ <form method="get">
+    {{ filter.form.as_p }}
+    <button type="submit">Search</button>
+  </form>
+
+
+
+   <div class="panel panel-default">
     <div class="panel-heading">
             <h5><strong>Projects</strong></h5>
             </div>
                     <div class="panel-body">
 <div class="table-responsive">
-                <table class="table table-bordered table-condensed" id="table_id">
+                <table class="table table-bordered table-condensed" id="example">
                     <thead>
                         <tr><th>S/N</th>
                             <th>Title</th>
@@ -23,7 +30,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for project in object_list %}
+                        {% for project in filter.qs %}
                         <tr>
                         <td>{{forloop.counter}}</td>
                             <td><a href="{% url 'project:project_detail' project.id %}">{{project.title}}</a></td>

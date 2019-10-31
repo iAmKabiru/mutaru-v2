@@ -7,7 +7,7 @@ from lga.models import Lga
 
 
 class YearForm(forms.ModelForm):
-    
+
     year = forms.CharField(widget=forms.TextInput(
         attrs={
             'class': 'form-control',
@@ -22,26 +22,22 @@ class YearForm(forms.ModelForm):
     ))
 
     date_open = forms.CharField(widget=forms.TextInput(
-        attrs= {
-            'class':'form-control',
-            'placeholder':'yyyy-mm-dd'
+        attrs={
+            'class': 'form-control',
+            'placeholder': 'yyyy-mm-dd'
         }
     ))
 
     date_closed = forms.CharField(widget=forms.TextInput(
         attrs={
-            'class':'form-control',
-            'placeholder' : 'yyyy-mm-dd'
+            'class': 'form-control',
+            'placeholder': 'yyyy-mm-dd'
         }
     ))
 
     class Meta:
         model = Year
         fields = '__all__'
-
-  
-
-
 
 
 class ProjectForm(forms.ModelForm):
@@ -169,7 +165,13 @@ class PmpProjectEditForm(forms.ModelForm):
 
     class Meta:
         model = Project
-        exclude = ('date','budget_year')
+        exclude = ('date', 'budget_year')
+
+
+class ProjectFilterForm(forms.ModelForm):
+    class Meta:
+        model = Project
+        fields = ('date',)
 
 
 class MinistryProjectEditForm(forms.ModelForm):
@@ -178,6 +180,7 @@ class MinistryProjectEditForm(forms.ModelForm):
             'class': 'form-control'
         }
     ))
+
     class Meta:
         model = Project
         fields = ['progress', 'progress_comment']

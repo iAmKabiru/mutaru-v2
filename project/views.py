@@ -1,5 +1,5 @@
 from django.urls import reverse_lazy, reverse
-from django.views.generic import ListView, DetailView 
+from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from project.models import Project, Comment, Report, Year
 from django.shortcuts import render
@@ -12,45 +12,50 @@ from project.forms import (
     ProjectForm,
     ReportForm,
     CommentEditForm,
-    ReportEditForm
+    ReportEditForm,
+    ProjectFilterForm
 )
-from .filters import ProjectFilter
+from .filters import ProjectFilter, PmpProjectFilter
 from django_filters.views import FilterView
-from project.forms import FilterForm
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
 import datetime
+from django.core.exceptions import ValidationError
 
 
 def landpage(request):
     return render(request, 'landpage.html')
-    
+
+
 class YearCreate(LoginRequiredMixin, CreateView):
     model = Year
     form_class = YearForm
     template_name = 'year/year_form.html'
-    
+
     def get_success_url(self):
-        return reverse('project:year_detail', kwargs={'pk' : self.object.pk})
+        return reverse('project:year_detail', kwargs={'pk': self.object.pk})
+
 
 class YearDetail(LoginRequiredMixin, DetailView):
     model = Year
     template_name = 'year/year_detail.html'
+
 
 class YearDelete(LoginRequiredMixin, DeleteView):
     model = Year
     template_name = 'year/year_confirm_delete.html'
     success_url = reverse_lazy('project:year_list')
 
+
 class YearUpdate(LoginRequiredMixin, UpdateView):
     model = Year
     form_class = YearForm
     template_name = 'year/year_form.html'
-    
+
     def get_success_url(self):
-        return reverse('project:year_detail', kwargs={'pk' : self.object.pk})
+        return reverse('project:year_detail', kwargs={'pk': self.object.pk})
 
 
 class YearList(LoginRequiredMixin, ListView):
@@ -65,13 +70,13 @@ class ProjectCreate(LoginRequiredMixin, CreateView):
    
     def get_success_url(self):
         return reverse('project:project_detail', kwargs={'pk' : self.object.pk})
-"""    
+"""
+
 
 def project_create(request):
     year = Year.objects.last()
     today = datetime.date.today()
     difference = year.date_closed - today
-      
 
     if request.method == 'POST':
         form = ProjectForm(request.POST)
@@ -79,29 +84,30 @@ def project_create(request):
             project = form.save(commit=False)
             project.budget_year = year
             #project.date = datetime.date.today()
-            #form.post_project()
+            # form.post_project()
             form.save()
             return redirect('project:project_detail', pk=project.pk)
     else:
         form = ProjectForm()
 
     context = {
-        'difference':difference,
-        'form':form
+        'difference': difference,
+        'form': form
     }
 
     return render(request, 'project/project_form.html', context)
 
 
- 
 class ProjectDetail(DetailView):
     model = Project
+
 
 def project_list(request):
     project_list = Project.objects.filter(status='approved')
     form = FilterForm()
     project_filter = ProjectFilter(request.GET, queryset=project_list)
-    return render(request, 'project/project_list.html', {'filter': project_filter, 'form':form})
+    return render(request, 'project/project_list.html', {'filter': project_filter, 'form': form})
+
 
 class ProjectDelete(LoginRequiredMixin, DeleteView):
     model = Project
@@ -109,32 +115,40 @@ class ProjectDelete(LoginRequiredMixin, DeleteView):
 
 # project edits views
 
+
 class MinistryProjectUpdate(LoginRequiredMixin, UpdateView):
     model = Project
     form_class = MinistryProjectEditForm
+
     def get_success_url(self):
-        return reverse('project:project_detail', kwargs={'pk' : self.object.pk})
+        return reverse('project:project_detail', kwargs={'pk': self.object.pk})
+
 
 class PmpProjectUpdate(LoginRequiredMixin, UpdateView):
     model = Project
     form_class = PmpProjectEditForm
+
     def get_success_url(self):
-        return reverse('project:project_detail', kwargs={'pk' : self.object.pk})
+        return reverse('project:project_detail', kwargs={'pk': self.object.pk})
 
 
-# project list views 
+# project list views
 class PmpProjects(LoginRequiredMixin, ListView):
     model = Project
     template_name = 'project/pmp_projects.html'
 
+
 class MinistryProjects(LoginRequiredMixin, ListView):
     model = Project
     template_name = 'project/ministry_projects.html'
-   
+
     def get_queryset(self):
-        q1 = Project.objects.filter(ministry=self.request.user.ministry).filter(status='approved')
-        q2 = Project.objects.filter(status='unreviewed').filter(ministry=self.request.user.ministry).filter(date__day__gte = datetime.date.today().day - 7)
+        q1 = Project.objects.filter(
+            ministry=self.request.user.ministry).filter(status='approved')
+        q2 = Project.objects.filter(status='unreviewed').filter(
+            ministry=self.request.user.ministry).filter(date__day__gte=datetime.date.today().day - 7)
         return q1.union(q2)
+
 
 class GovernorList(LoginRequiredMixin, ListView):
     model = Project
@@ -142,10 +156,9 @@ class GovernorList(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         q1 = Project.objects.filter(status='approved')
-        q2 = Project.objects.filter(status='unreviewed').filter(date__day__lte = datetime.date.today().day - 14)
+        q2 = Project.objects.filter(status='unreviewed').filter(
+            date__day__lte=datetime.date.today().day - 14)
         return q1.union(q2)
-    
-    
 
 
 def add_comment(request, pk):
@@ -159,18 +172,17 @@ def add_comment(request, pk):
             form.post_comment()
             comment.save()
             return redirect('project:comment_detail', pk=comment.pk)
-            #return redirect('project:project_detail', pk=project.pk)
-
+            # return redirect('project:project_detail', pk=project.pk)
 
     else:
         form = CommentForm()
     return render(request, 'comment/comment_form.html', {'form': form})
 
 
-
 class CommentDetail(DetailView):
     model = Comment
     template_name = 'comment/comment_detail.html'
+
 
 @login_required
 def comment_delete(request, pk):
@@ -178,13 +190,14 @@ def comment_delete(request, pk):
     comment.delete()
     return redirect('project:project_detail', pk=comment.project.pk)
 
+
 class CommentUpdate(UpdateView):
     model = Comment
     form_class = CommentEditForm
     template_name = 'comment/comment_form.html'
-    
+
     def get_success_url(self):
-        return reverse('project:comment_detail', kwargs={'pk' : self.object.pk})
+        return reverse('project:comment_detail', kwargs={'pk': self.object.pk})
 
 
 # reports views
@@ -192,12 +205,14 @@ class PmpReports(LoginRequiredMixin, ListView):
     model = Report
     template_name = 'report/pmp_reports.html'
 
+
 class MinistryReports(LoginRequiredMixin, ListView):
     model = Report
     template_name = 'report/ministry_reports.html'
-    
+
     def get_queryset(self):
-        return Report.objects.filter(ministry=self.request.user.ministry).filter(status='approved') 
+        return Report.objects.filter(ministry=self.request.user.ministry).filter(status='approved')
+
 
 class GovernorReports(LoginRequiredMixin, ListView):
     model = Report
@@ -207,14 +222,14 @@ class GovernorReports(LoginRequiredMixin, ListView):
         return Report.objects.filter(status='approved')
 
 
-
 class ReportCreate(CreateView):
     model = Report
     form_class = ReportForm
     template_name = 'report/report_form.html'
     #fields = ['project','text', 'lga', 'ministry', 'picture', 'submitted_by', 'phone']
+
     def get_success_url(self):
-        return reverse('project:report_detail', kwargs = {'pk':self.object.pk})
+        return reverse('project:report_detail', kwargs={'pk': self.object.pk})
 
     def form_valid(self, form):
         form.instance.by_user = self.request.user
@@ -231,34 +246,53 @@ class ReportDelete(LoginRequiredMixin, DeleteView):
     template_name = 'report/report_confirm_delete.html'
     success_url = reverse_lazy('project:pmp_reports')
 
+
 class ReportUpdate(UpdateView):
     model = Report
     form_class = ReportEditForm
     template_name = 'report/report_form.html'
-    
-    def get_success_url(self):
-        return reverse('project:report_detail', kwargs={'pk' : self.object.pk})
 
+    def get_success_url(self):
+        return reverse('project:report_detail', kwargs={'pk': self.object.pk})
 
 
 def dashboard(request):
     context = {}
     context['all_projects'] = Project.objects.all().count()
-    context['unreviewed_projects'] = Project.objects.filter(status='unreviewed').count()
-    context['approved_projects'] = Project.objects.filter(status='approved').count()
-    context['disapproved_projects'] = Project.objects.filter(status='disapproved').count()
+    context['unreviewed_projects'] = Project.objects.filter(
+        status='unreviewed').count()
+    context['approved_projects'] = Project.objects.filter(
+        status='approved').count()
+    context['disapproved_projects'] = Project.objects.filter(
+        status='disapproved').count()
 
     context['all_comments'] = Comment.objects.all().count()
-    context['unreviewed_comments'] = Comment.objects.filter(status='unreviewed').count()
-    context['approved_comments'] = Comment.objects.filter(status='approved').count()
-    context['disapproved_comments'] = Comment.objects.filter(status='disapproved').count()
+    context['unreviewed_comments'] = Comment.objects.filter(
+        status='unreviewed').count()
+    context['approved_comments'] = Comment.objects.filter(
+        status='approved').count()
+    context['disapproved_comments'] = Comment.objects.filter(
+        status='disapproved').count()
 
     context['all_reports'] = Report.objects.all().count()
-    context['unreviewed_reports'] = Report.objects.filter(status='unreviewed').count()
-    context['approved_reports'] = Report.objects.filter(status='approved').count()
-    context['disapproved_reports'] = Report.objects.filter(status='disapproved').count()
+    context['unreviewed_reports'] = Report.objects.filter(
+        status='unreviewed').count()
+    context['approved_reports'] = Report.objects.filter(
+        status='approved').count()
+    context['disapproved_reports'] = Report.objects.filter(
+        status='disapproved').count()
 
-    context['min_all_projects'] = Project.objects.filter(ministry=request.user.ministry).filter(status='approved').count()
-    context['min_all_reports'] = Report.objects.filter(ministry=request.user.ministry).filter(status='approved').count()
-    context['min_all_comments'] = Comment.objects.filter(status='approved').filter(project__ministry = request.user.ministry).count()
+    context['min_all_projects'] = Project.objects.filter(
+        ministry=request.user.ministry).filter(status='approved').count()
+    context['min_all_reports'] = Report.objects.filter(
+        ministry=request.user.ministry).filter(status='approved').count()
+    context['min_all_comments'] = Comment.objects.filter(
+        status='approved').filter(project__ministry=request.user.ministry).count()
     return render(request, 'dashboard/dashboard.html', context)
+
+
+def pmp_project_list(request):
+    project_list = Project.objects.all()
+    form = ProjectFilterForm()
+    project_filter = PmpProjectFilter(request.GET, queryset=project_list)
+    return render(request, 'project/pmp_projects.html', {'filter': project_filter, 'form': form})
