@@ -2,6 +2,7 @@ django==2.2
 django-filter==2.1.0
 django-filters==0.2.1
 django-progressive-web-app==0.1.1
+django-crispy-forms
 pytz==2018.9
 sqlparse==0.3.0
 gunicorn==19.3.0
