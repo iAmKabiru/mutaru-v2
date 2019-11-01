@@ -73,6 +73,7 @@ class ProjectCreate(LoginRequiredMixin, CreateView):
 """
 
 
+@login_required
 def project_create(request):
     year = Year.objects.last()
     today = datetime.date.today()
@@ -98,8 +99,9 @@ def project_create(request):
     return render(request, 'project/project_form.html', context)
 
 
-class ProjectDetail(DetailView):
+class ProjectDetail(LoginRequiredMixin, DetailView):
     model = Project
+
 
 class ProjectDelete(LoginRequiredMixin, DeleteView):
     model = Project
@@ -132,12 +134,16 @@ class PmpProjects(LoginRequiredMixin, ListView):
 
 """
 
+
+@login_required
 def project_list(request):
     project_list = Project.objects.filter(status='approved')
     form = FilterForm()
     project_filter = ProjectFilter(request.GET, queryset=project_list)
     return render(request, 'project/project_list.html', {'filter': project_filter, 'form': form})
 
+
+@login_required
 def pmp_project_list(request):
     project_list = Project.objects.all()
     form = ProjectFilterForm()
@@ -158,13 +164,18 @@ class MinistryProjects(LoginRequiredMixin, ListView):
         return q1.union(q2)
 """
 
+
+@login_required
 def ministry_project_list(request):
-    q1 = Project.objects.filter(ministry=request.user.ministry).filter(status='approved')
-    q2 = Project.objects.filter(status='unreviewed').filter(ministry=request.user.ministry).filter(date__day__gte=datetime.date.today().day - 7)
+    q1 = Project.objects.filter(
+        ministry=request.user.ministry).filter(status='approved')
+    q2 = Project.objects.filter(status='unreviewed').filter(
+        ministry=request.user.ministry).filter(date__day__gte=datetime.date.today().day - 7)
     q3 = q1.union(q2)
     form = ProjectFilterForm()
     project_filter = ProjectFilterSet(request.GET, queryset=q3)
     return render(request, 'project/ministry_projects.html', {'filter': project_filter, 'form': form})
+
 
 """
 class GovernorList(LoginRequiredMixin, ListView):
@@ -178,15 +189,19 @@ class GovernorList(LoginRequiredMixin, ListView):
         return q1.union(q2)
 """
 
+
+@login_required
 def governor_project_list(request):
     q1 = Project.objects.filter(status='approved')
-    q2 = Project.objects.filter(status='unreviewed').filter(date__day__gte=datetime.date.today().day - 14)
+    q2 = Project.objects.filter(status='unreviewed').filter(
+        date__day__gte=datetime.date.today().day - 14)
     q3 = q1.union(q2)
     form = ProjectFilterForm()
     project_filter = ProjectFilterSet(request.GET, queryset=q3)
     return render(request, 'project/governor_projects.html', {'filter': project_filter, 'form': form})
 
 
+@login_required
 def add_comment(request, pk):
     project = get_object_or_404(Project, pk=pk)
     if request.method == "POST":
@@ -205,7 +220,7 @@ def add_comment(request, pk):
     return render(request, 'comment/comment_form.html', {'form': form})
 
 
-class CommentDetail(DetailView):
+class CommentDetail(LoginRequiredMixin, DetailView):
     model = Comment
     template_name = 'comment/comment_detail.html'
 
@@ -217,7 +232,7 @@ def comment_delete(request, pk):
     return redirect('project:project_detail', pk=comment.project.pk)
 
 
-class CommentUpdate(UpdateView):
+class CommentUpdate(LoginRequiredMixin, UpdateView):
     model = Comment
     form_class = CommentEditForm
     template_name = 'comment/comment_form.html'
@@ -248,7 +263,7 @@ class GovernorReports(LoginRequiredMixin, ListView):
         return Report.objects.filter(status='approved')
 
 
-class ReportCreate(CreateView):
+class ReportCreate(LoginRequiredMixin, CreateView):
     model = Report
     form_class = ReportForm
     template_name = 'report/report_form.html'
@@ -262,7 +277,7 @@ class ReportCreate(CreateView):
         return super().form_valid(form)
 
 
-class ReportDetail(DetailView):
+class ReportDetail(LoginRequiredMixin, DetailView):
     model = Report
     template_name = 'report/report_detail.html'
 
@@ -273,7 +288,7 @@ class ReportDelete(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('project:pmp_reports')
 
 
-class ReportUpdate(UpdateView):
+class ReportUpdate(LoginRequiredMixin, UpdateView):
     model = Report
     form_class = ReportEditForm
     template_name = 'report/report_form.html'
@@ -282,6 +297,7 @@ class ReportUpdate(UpdateView):
         return reverse('project:report_detail', kwargs={'pk': self.object.pk})
 
 
+@login_required
 def dashboard(request):
     context = {}
     context['all_projects'] = Project.objects.all().count()
@@ -315,6 +331,3 @@ def dashboard(request):
     context['min_all_comments'] = Comment.objects.filter(
         status='approved').filter(project__ministry=request.user.ministry).count()
     return render(request, 'dashboard/dashboard.html', context)
-
-
-

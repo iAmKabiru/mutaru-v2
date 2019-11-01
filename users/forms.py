@@ -1,13 +1,24 @@
+from django.db import transaction
+from django.contrib.auth.forms import UserCreationForm
+from mda.models import Ministry
+from users.models import Profile
+from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm
 from django.contrib.auth import get_user_model
 User = get_user_model()
-from django import forms
-from users.models import Profile
-from mda.models import Ministry
-from django.contrib.auth.forms import UserCreationForm
-from django.db import transaction
 
+
+class CustomUserCreationForm(UserCreationForm):
+    class Meta(UserCreationForm.Meta):
+        model = User
+        fields = ('username', 'first_name', 'last_name', 'email', 'phone',)
+
+
+class CustomUserChangeForm(UserChangeForm):
+    class Meta:
+        model = User
+        fields = ('username', 'first_name', 'last_name', 'email', 'phone')
 
 
 # MINISTRY USER FORM
@@ -19,45 +30,44 @@ class MinistryUserForm(forms.ModelForm):
         }
     ))
 
-    last_name = forms.CharField(widget = forms.TextInput(
-        attrs = {
-            'class':'form-control',
-            'placeholder':'Last Name'
+    last_name = forms.CharField(widget=forms.TextInput(
+        attrs={
+            'class': 'form-control',
+            'placeholder': 'Last Name'
         }
     ))
 
-    username = forms.CharField(widget = forms.TextInput(
-        attrs = {
-            'class':'form-control',
-            'placeholder':'Username'
+    username = forms.CharField(widget=forms.TextInput(
+        attrs={
+            'class': 'form-control',
+            'placeholder': 'Username'
         }
     ))
-    
+
     ministry = forms.ModelChoiceField(queryset=Ministry.objects.all(), required=True, widget=forms.Select(
         attrs={
             'class': 'form-control',
         }
     ))
 
-    email = forms.EmailField(widget = forms.TextInput(
-        attrs = {
-            'class':'form-control',
-            'placeholder':'Email'
+    email = forms.EmailField(widget=forms.TextInput(
+        attrs={
+            'class': 'form-control',
+            'placeholder': 'Email'
         }
     ))
 
-    password = forms.CharField(widget = forms.PasswordInput (
-        attrs = {
-            'class':'form-control',
-            'placeholder':'password'
+    password = forms.CharField(widget=forms.PasswordInput(
+        attrs={
+            'class': 'form-control',
+            'placeholder': 'password'
         }
     ))
 
-  
     class Meta:
         model = User
         fields = ['first_name', 'last_name',
-         'email', 'username','gender','ministry','password']
+                  'email', 'username', 'gender', 'ministry', 'password']
 
     @transaction.atomic
     def save(self):
@@ -71,47 +81,45 @@ class MinistryUserForm(forms.ModelForm):
 
 # GOVERNOR FORM
 class GovernorForm(forms.ModelForm):
-    first_name = forms.CharField(widget = forms.TextInput(
-        attrs = {
-            'class':'form-control',
+    first_name = forms.CharField(widget=forms.TextInput(
+        attrs={
+            'class': 'form-control',
             'placeholder': 'First Name'
         }
     ))
 
-    last_name = forms.CharField(widget = forms.TextInput(
-        attrs = {
-            'class':'form-control',
-            'placeholder':'Last Name'
+    last_name = forms.CharField(widget=forms.TextInput(
+        attrs={
+            'class': 'form-control',
+            'placeholder': 'Last Name'
         }
     ))
 
-    username = forms.CharField(widget = forms.TextInput(
-        attrs = {
-            'class':'form-control',
-            'placeholder':'Username'
+    username = forms.CharField(widget=forms.TextInput(
+        attrs={
+            'class': 'form-control',
+            'placeholder': 'Username'
         }
     ))
 
-    email = forms.EmailField(widget = forms.TextInput(
-        attrs = {
-            'class':'form-control',
-            'placeholder':'Email'
+    email = forms.EmailField(widget=forms.TextInput(
+        attrs={
+            'class': 'form-control',
+            'placeholder': 'Email'
         }
     ))
 
-    password = forms.CharField(widget = forms.PasswordInput (
-        attrs = {
-            'class':'form-control',
-            'placeholder':'password'
+    password = forms.CharField(widget=forms.PasswordInput(
+        attrs={
+            'class': 'form-control',
+            'placeholder': 'password'
         }
     ))
-
-
 
     class Meta:
         model = User
         fields = ['first_name', 'last_name',
-         'email', 'username', 'gender', 'password']
+                  'email', 'username', 'gender', 'password']
 
     @transaction.atomic
     def save(self):
@@ -122,51 +130,48 @@ class GovernorForm(forms.ModelForm):
         u.save()
         return u
 
-  
 
 # Budget & econ FORM
 class BudgetForm(forms.ModelForm):
-    first_name = forms.CharField(widget = forms.TextInput(
-        attrs = {
-            'class':'form-control',
+    first_name = forms.CharField(widget=forms.TextInput(
+        attrs={
+            'class': 'form-control',
             'placeholder': 'First Name'
         }
     ))
 
-    last_name = forms.CharField(widget = forms.TextInput(
-        attrs = {
-            'class':'form-control',
-            'placeholder':'Last Name'
+    last_name = forms.CharField(widget=forms.TextInput(
+        attrs={
+            'class': 'form-control',
+            'placeholder': 'Last Name'
         }
     ))
 
-    username = forms.CharField(widget = forms.TextInput(
-        attrs = {
-            'class':'form-control',
-            'placeholder':'Username'
+    username = forms.CharField(widget=forms.TextInput(
+        attrs={
+            'class': 'form-control',
+            'placeholder': 'Username'
         }
     ))
 
-    email = forms.EmailField(widget = forms.TextInput(
-        attrs = {
-            'class':'form-control',
-            'placeholder':'Email'
+    email = forms.EmailField(widget=forms.TextInput(
+        attrs={
+            'class': 'form-control',
+            'placeholder': 'Email'
         }
     ))
 
-    password = forms.CharField(widget = forms.PasswordInput (
-        attrs = {
-            'class':'form-control',
-            'placeholder':'password'
+    password = forms.CharField(widget=forms.PasswordInput(
+        attrs={
+            'class': 'form-control',
+            'placeholder': 'password'
         }
     ))
-
-
 
     class Meta:
         model = User
         fields = ['first_name', 'last_name',
-         'email', 'username', 'gender', 'password']
+                  'email', 'username', 'gender', 'password']
 
     @transaction.atomic
     def save(self):
@@ -178,51 +183,47 @@ class BudgetForm(forms.ModelForm):
         return u
 
 
-
-
 # Due process FORM
 class DueProcessForm(forms.ModelForm):
-    first_name = forms.CharField(widget = forms.TextInput(
-        attrs = {
-            'class':'form-control',
+    first_name = forms.CharField(widget=forms.TextInput(
+        attrs={
+            'class': 'form-control',
             'placeholder': 'First Name'
         }
     ))
 
-    last_name = forms.CharField(widget = forms.TextInput(
-        attrs = {
-            'class':'form-control',
-            'placeholder':'Last Name'
+    last_name = forms.CharField(widget=forms.TextInput(
+        attrs={
+            'class': 'form-control',
+            'placeholder': 'Last Name'
         }
     ))
 
-    username = forms.CharField(widget = forms.TextInput(
-        attrs = {
-            'class':'form-control',
-            'placeholder':'Username'
+    username = forms.CharField(widget=forms.TextInput(
+        attrs={
+            'class': 'form-control',
+            'placeholder': 'Username'
         }
     ))
 
-    email = forms.EmailField(widget = forms.TextInput(
-        attrs = {
-            'class':'form-control',
-            'placeholder':'Email'
+    email = forms.EmailField(widget=forms.TextInput(
+        attrs={
+            'class': 'form-control',
+            'placeholder': 'Email'
         }
     ))
 
-    password = forms.CharField(widget = forms.PasswordInput (
-        attrs = {
-            'class':'form-control',
-            'placeholder':'password'
+    password = forms.CharField(widget=forms.PasswordInput(
+        attrs={
+            'class': 'form-control',
+            'placeholder': 'password'
         }
     ))
-
-
 
     class Meta:
         model = User
         fields = ['first_name', 'last_name',
-         'email', 'username', 'gender', 'password']
+                  'email', 'username', 'gender', 'password']
 
     @transaction.atomic
     def save(self):
@@ -234,53 +235,47 @@ class DueProcessForm(forms.ModelForm):
         return u
 
 
-
-
-
 # PMP form
 class PMPForm(forms.ModelForm):
-    first_name = forms.CharField(widget = forms.TextInput(
-        attrs = {
-            'class':'form-control',
+    first_name = forms.CharField(widget=forms.TextInput(
+        attrs={
+            'class': 'form-control',
             'placeholder': 'First Name'
         }
     ))
 
-    last_name = forms.CharField(widget = forms.TextInput(
-        attrs = {
-            'class':'form-control',
-            'placeholder':'Last Name'
+    last_name = forms.CharField(widget=forms.TextInput(
+        attrs={
+            'class': 'form-control',
+            'placeholder': 'Last Name'
         }
     ))
 
-    username = forms.CharField(widget = forms.TextInput(
-        attrs = {
-            'class':'form-control',
-            'placeholder':'Username'
+    username = forms.CharField(widget=forms.TextInput(
+        attrs={
+            'class': 'form-control',
+            'placeholder': 'Username'
         }
     ))
 
-    email = forms.EmailField(widget = forms.TextInput(
-        attrs = {
-            'class':'form-control',
-            'placeholder':'Email'
+    email = forms.EmailField(widget=forms.TextInput(
+        attrs={
+            'class': 'form-control',
+            'placeholder': 'Email'
         }
     ))
 
-    password = forms.CharField(widget = forms.PasswordInput (
-        attrs = {
-            'class':'form-control',
-            'placeholder':'password'
+    password = forms.CharField(widget=forms.PasswordInput(
+        attrs={
+            'class': 'form-control',
+            'placeholder': 'password'
         }
     ))
-
-
 
     class Meta:
         model = User
         fields = ['first_name', 'last_name',
-         'email', 'username', 'gender','password']
-
+                  'email', 'username', 'gender', 'password']
 
     @transaction.atomic
     def save(self):
@@ -292,17 +287,14 @@ class PMPForm(forms.ModelForm):
         return u
 
 
-
 # USER EDIT PROFILE FORM
 class EditProfileForm(UserChangeForm):
- 
 
     email = forms.EmailField(widget=forms.EmailInput(
         attrs={
             'class': 'form-control',
         }
     ))
-
 
     first_name = forms.CharField(widget=forms.TextInput(
         attrs={
@@ -315,16 +307,16 @@ class EditProfileForm(UserChangeForm):
             'class': 'form-control',
         }
     ))
-    
+
     password = forms.CharField(widget=forms.HiddenInput())
 
     class Meta:
         model = User
         fields = (
-           # 'username',
+            # 'username',
             'email',
             'first_name',
             'last_name',
             'gender',
             'password'
-            )
+        )

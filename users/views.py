@@ -1,3 +1,4 @@
+from django.views.generic import TemplateView
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
@@ -16,8 +17,16 @@ from django.urls import reverse_lazy, reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib.auth import get_user_model
+from django.views import generic
+from .forms import CustomUserCreationForm, CustomUserChangeForm
 User = get_user_model()
-from django.views.generic import TemplateView
+
+
+class SignUp(generic.CreateView):
+    form_class = CustomUserCreationForm
+    success_url = reverse_lazy('login')
+    template_name = 'signup.html'
+
 
 @login_required
 def profile(request):
@@ -124,7 +133,6 @@ def pmp_add(request):
         return render(request, 'users/add.html', context)
 
 
-
 # Budget & eco planning ADD
 @login_required
 def budget_add(request):
@@ -143,8 +151,6 @@ def budget_add(request):
         return render(request, 'users/add.html', context)
 
 
-
-
 # due process ADD
 @login_required
 def due_process_add(request):
@@ -161,8 +167,6 @@ def due_process_add(request):
         user_form = DueProcessForm()
         context['user_form'] = user_form
         return render(request, 'users/add.html', context)
-
-
 
 
 @login_required
