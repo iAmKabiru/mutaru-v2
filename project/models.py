@@ -4,6 +4,8 @@ from lga.models import Lga
 from mda.models import Ministry
 from django.urls import reverse
 from django.conf import settings
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
 
 class Year(models.Model):
@@ -43,8 +45,7 @@ class Project(models.Model):
     status = models.CharField(max_length = 15, choices = STATUS_CHOICES, default = unreviewed)
     progress = models.CharField(max_length = 3, default=0, verbose_name="progress(%)")
     progress_comment = models.TextField(default="none", blank=True)    
-    submitted_by = models.CharField(max_length = 100, verbose_name = 'Full Name', blank=True, null=True)
-    phone = models.CharField(max_length = 15, verbose_name = 'Phone Number', blank=True, null=True)
+    submittedBy = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     budget_year = models.ForeignKey(Year, on_delete=models.CASCADE, blank=True, null=True, related_name='projects')
 
     
@@ -67,9 +68,8 @@ class Comment(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name = 'comments')
     picture = models.ImageField(upload_to='media/comments/%y/%m/%d', blank = True, verbose_name='image')
     created = models.DateField(default=timezone.now)
-    submitted_by = models.CharField(max_length = 100, verbose_name = 'Full Name', blank=True, null=True)
-    phone = models.CharField(max_length = 15, verbose_name = 'Phone Number', blank=True, null=True)
-    
+    submittedBy = models.CharField(max_length = 100, verbose_name = 'Full Name', blank=True, null=True)    
+
     unreviewed = 'unreviewed'
     approved = 'approved'
     disapproved = 'disapproved'
@@ -129,8 +129,8 @@ class Report(models.Model):
      picture = models.ImageField(upload_to='media/reports/%y/%m/%d', blank = True, verbose_name='image')
      lga = models.ForeignKey(Lga, on_delete=models.CASCADE, blank=True, null=True)
      ministry = models.ForeignKey(Ministry, on_delete=models.CASCADE, null = True)
-     submitted_by = models.CharField(max_length = 100, verbose_name = 'Full Name', blank=True, null=True)
-     phone = models.CharField(max_length = 15, verbose_name = 'Phone Number', blank=True, null=True)
+     submittedBy = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True, related_name='users')
+
     
      unreviewed = 'unreviewed'
      approved = 'approved'

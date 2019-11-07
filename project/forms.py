@@ -66,24 +66,12 @@ class ProjectForm(forms.ModelForm):
         }
     ))
 
-    submitted_by = forms.CharField(label="Full Name", widget=forms.TextInput(
-        attrs={
-            'class': 'form-control',
-            'placeholder': 'Enter your name'
-        }
-    ))
-
-    phone = forms.CharField(widget=forms.TextInput(
-        attrs={
-            'class': 'form-control',
-            'placeholder': 'enter your phone number'
-        }
-    ))
+  
 
     class Meta:
         model = Project
         fields = ('title', 'description', 'lga',
-                  'ministry', 'submitted_by', 'phone')
+                  'ministry')
 
 
 class FilterForm(forms.ModelForm):
@@ -113,7 +101,7 @@ class FilterForm(forms.ModelForm):
 
     class Meta:
         model = Project
-        fields = ('phone', 'title', 'lga', 'ministry', 'date')
+        fields = ('title', 'lga', 'ministry', 'date')
 
 
 class PmpProjectEditForm(forms.ModelForm):
@@ -143,7 +131,7 @@ class PmpProjectEditForm(forms.ModelForm):
         }
     ))
 
-    submitted_by = forms.CharField(label="Full Name", widget=forms.TextInput(
+    submittedBy = forms.CharField(label="Full Name", widget=forms.TextInput(
         attrs={
             'class': 'form-control',
             'placeholder': 'Enter your name'
@@ -196,24 +184,9 @@ class CommentForm(forms.ModelForm):
 
     picture = forms.ImageField()
 
-    submitted_by = forms.CharField(label="Full Name", widget=forms.TextInput(
-        attrs={
-            'class': 'form-control',
-            'placeholder': 'Enter your name'
-        }
-
-
-    ))
-    phone = forms.CharField(widget=forms.TextInput(
-        attrs={
-            'class': 'form-control',
-            'placeholder': 'enter your phone number'
-        }
-    ))
-
     class Meta:
         model = Comment
-        fields = ['text', 'picture', 'submitted_by', 'phone']
+        fields = ['text', 'picture']
 
     def post_comment(self):
         text = self.cleaned_data.get('text')
@@ -231,14 +204,6 @@ class CommentEditForm(forms.ModelForm):
 
     picture = forms.ImageField()
 
-    submitted_by = forms.CharField(label="Full Name", widget=forms.TextInput(
-        attrs={
-            'class': 'form-control',
-            'placeholder': 'Enter your name'
-        }
-
-
-    ))
     phone = forms.CharField(widget=forms.TextInput(
         attrs={
             'class': 'form-control',
@@ -248,7 +213,7 @@ class CommentEditForm(forms.ModelForm):
 
     class Meta:
         model = Comment
-        fields = ['text', 'picture', 'submitted_by', 'phone', 'status']
+        fields = ['text', 'picture', 'phone', 'status']
 
 
 # report form
@@ -282,25 +247,11 @@ class ReportForm(forms.ModelForm):
 
     picture = forms.ImageField()
 
-    submitted_by = forms.CharField(label="Full Name", widget=forms.TextInput(
-        attrs={
-            'class': 'form-control',
-            'placeholder': 'Enter your name'
-        }
-
-
-    ))
-    phone = forms.CharField(widget=forms.TextInput(
-        attrs={
-            'class': 'form-control',
-            'placeholder': 'enter your phone number'
-        }
-    ))
 
     class Meta:
         model = Report
         fields = ['report_title', 'text', 'lga', 'ministry',
-                  'picture', 'submitted_by', 'phone']
+                  'picture']
 
 
 class ReportEditForm(forms.ModelForm):
@@ -333,15 +284,6 @@ class ReportEditForm(forms.ModelForm):
 
     picture = forms.ImageField()
 
-    submitted_by = forms.CharField(label="Full Name", widget=forms.TextInput(
-        attrs={
-            'class': 'form-control',
-            'placeholder': 'Enter your name'
-        }
-
-
-    ))
-
     phone = forms.CharField(widget=forms.TextInput(
         attrs={
             'class': 'form-control',
@@ -352,4 +294,4 @@ class ReportEditForm(forms.ModelForm):
     class Meta:
         model = Report
         fields = ['report_title', 'text', 'lga', 'ministry',
-                  'picture', 'submitted_by', 'phone', 'status']
+                  'picture', 'phone', 'status']

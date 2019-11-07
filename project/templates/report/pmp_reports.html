@@ -11,7 +11,6 @@
                 <table class="table table-bordered table-condensed" id="table_id">
                     <thead>
                         <tr><th>S/N</th>
-                            <th>Text</th>
                             <th>Project</th>
                             <th>Picture</th>
                             <th>Created</th>
@@ -25,11 +24,10 @@
                         <tr>
                         <td>{{forloop.counter}}</td>
                             <td><a href="{% url 'project:report_detail' report.id %}">{{report.text|truncatewords:"10"}}</a></td>
-                            <td>{{report.project}}</td>
                             <td> <a href="/media/{{report.picture}}">Image</a></td>
                             <td>{{report.created}}</td>
-                            <td>{{report.submitted_by}}</td>
-                            <td>{{report.phone}}</td>
+                            <td>{{report.submittedBy}}</td>
+                            <td>{{report.submittedBy.phone}}</td>
                             <td>{{report.status}}</td>
 
                             {% endfor %}

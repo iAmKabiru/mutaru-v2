@@ -37,20 +37,7 @@
             </form>
 
             <hr>
-    {% for project in filter.qs %}
-    <div class="panel panel-default project-panel">
-    <div class="panel-heading">
-            <h4><strong>{{project.title}}</strong><span style="font-size:15px;"> - {{project.date}}</span></h4>
-            </div>
-                    <div class="panel-body">
 
-            <h3>{{project.description}}</h3>
-            <h5><i class="fas fa-landmark"></i> {{project.ministry}}</h5>
-            <h5><i class="fas fa-map-marked-alt"></i> {{project.lga}}</h5>
-            <a href="{% url 'project:comment_create' project.id %}" class="btn btn-primary"><i class="fas fa-comment"></i> Comment</a>
-        </div>
-    </div>
-    {% endfor %}
         </div>
     </div>
 </div>
@@ -69,4 +56,29 @@
   </div>
   
 </div>
+
+ <div class = "row">
+    <div class = "col-md-2"></div>
+    
+      <div class="col-md-8">
+      {% for project in filter.qs %}
+    
+
+    <div class="panel panel-default">
+    <div class="panel-heading">
+            <h4><strong>{{project.title}}</strong><span style="font-size:15px;"> - {{project.date}}</span></h4>
+    </div>
+        <div class="panel-body">
+
+            <h3>{{project.description}}</h3>
+            <h5><i class="fas fa-landmark"></i> {{project.ministry}}</h5>
+            <h5><i class="fas fa-map-marked-alt"></i> {{project.lga}}</h5>
+            <a href="{% url 'project:comment_create' project.id %}" class="btn btn-primary"><i class="fas fa-comment"></i> Comment</a>
+        </div>
+    </div>
+    {% endfor %}
+    </div>
+      
+    <div class = "col-md-2"></div>  
+  </div> 
 {% endblock %}

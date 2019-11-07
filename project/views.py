@@ -84,7 +84,7 @@ def project_create(request):
         if form.is_valid():
             project = form.save(commit=False)
             project.budget_year = year
-            #project.date = datetime.date.today()
+            project.submittedBy = request.user
             # form.post_project()
             form.save()
             return redirect('project:project_detail', pk=project.pk)
@@ -210,6 +210,7 @@ def add_comment(request, pk):
             comment = form.save(commit=False)
             comment.project = project
             comment.picture = form.cleaned_data['picture']
+            comment.submittedBy = request.user
             form.post_comment()
             comment.save()
             return redirect('project:comment_detail', pk=comment.pk)
@@ -273,7 +274,7 @@ class ReportCreate(LoginRequiredMixin, CreateView):
         return reverse('project:report_detail', kwargs={'pk': self.object.pk})
 
     def form_valid(self, form):
-        form.instance.by_user = self.request.user
+        form.instance.submittedBy = self.request.user
         return super().form_valid(form)
 
 

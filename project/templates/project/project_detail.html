@@ -53,6 +53,7 @@
                             <th>Submitted By</th>
                             <th>Phone No.</th>
                             <th>Status</th>
+                            <th>image</th>
                        </tr>
                     </thead>
                     <tbody>
@@ -61,8 +62,8 @@
                         <td>{{forloop.counter}}</td>
                             <td><a href="{% url 'project:comment_detail' comment.id %}">{{comment.text|truncatewords:"8"}}</a></td>
                            <td>{{comment.created}}</td>
-                            <td>{{comment.submitted_by}}</td>
-                            <td>{{comment.phone}}</td>
+                            <td>{{comment.submittedBy}}</td>
+                            <td>{{comment.submittedBy.phone}}</td>
                             <td>{{comment.status}}</td>
                             <td><a href="/media/{{comment.picture}}">Image</a></td>
                             {% endfor %}
